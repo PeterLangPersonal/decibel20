@@ -1,0 +1,16 @@
+export const DamageTypes = {
+    slashing: 'slashing',
+    piercing: 'piercing',
+    bludgeoning: 'bludgeoning',
+    fire: 'fire',
+    acid: 'acid',
+    cold: 'cold',
+    force: 'force',
+    lightning: 'lightning',
+    necrotic: 'necrotic',
+    poison: 'poison',
+    psychic: 'psychic',
+    radiant: 'radiant',
+    thunder: 'thunder',
+    healing: 'healing',
+};

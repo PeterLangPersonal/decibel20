@@ -131,3 +131,6 @@ dist
 
 # Scripts files
 scripts/
+
+# Local db
+*.sqlite
