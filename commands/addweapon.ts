@@ -36,7 +36,7 @@ module.exports = {
 			.setRequired(true)
 		),
 	async execute(interaction: any) {
-		const name = await interaction.options.getString('name');
+		const name = await interaction.options.getString('name').toLowerCase();
 		const damageType = await interaction.options.getString('damage-type');
 		const ranged = await interaction.options.getBoolean('ranged');
 

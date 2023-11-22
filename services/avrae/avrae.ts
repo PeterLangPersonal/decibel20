@@ -45,8 +45,6 @@ export const handleAvraeMessage = async ({
             }
         });
 
-        console.log(weapon);
-
         if (weapon) {
             if (weapon.damageType === DamageTypes.slashing && !weapon.ranged) {
                 await playClip("https://youtu.be/vT-qZZSaHPE", client, queue);
