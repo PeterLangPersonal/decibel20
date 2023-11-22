@@ -32,7 +32,7 @@ jobs:
           git pull origin main
           npm install
           tsc
-          pm2 restart decibel
+          pm2 restart decibel20
               
     - name: Remove Github Actions IP from security group
       run: |
