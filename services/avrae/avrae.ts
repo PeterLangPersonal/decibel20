@@ -19,31 +19,58 @@ export const handleAvraeMessage = async ({
         if (!queue) return;
 
         let name;
-        if (msg.embeds.length > 0 && msg.embeds[0].title && (msg.embeds[0].title.includes('attacks with') || msg.embeds[0].title.includes('heals with') || msg.embeds[0].title.includes('casts'))) {
+        if (msg.embeds.length > 0 && msg.embeds[0].title 
+            && (msg.embeds[0].title.includes('attacks with') 
+                || msg.embeds[0].title.includes('heals with') 
+                || msg.embeds[0].title.includes('casts'))) {
             name = msg.embeds[0].title;
-            if (!(name.includes('attacks with') || name.includes('heals with') || msg.embeds[0].title.includes('casts'))) {
+
+            let start = 0;
+            let len = 0;
+            if (name.includes('attacks with')) {
+                start = name.indexOf('attacks with') + 1;
+                len = 'attacks with'.length;
+            } else if (name.includes('heals with')) {
+                start = name.indexOf('heals with') + 1;
+                len = 'heals with'.length;
+            } else if (name.includes('casts')) {
+                start = name.indexOf('casts') + 1;
+                len = 'casts'.length;
+            } else {
                 return;
+            }
+
+            name = name.substring(start + len).toLowerCase().replace(/[^\w\s]/gi, '');
+            if (name.substring(0, 2) === 'a ') {
+                name = name.substring(2);
+            } else if (name.substring(0, 3) === 'an ') {
+                name = name.substring(3);
             }
         } else {
-            name = msg.content;
-            if (!(name.includes('damage'))) {
-                return;
-            }
+            return;
         }
 
-        const query = name.split(' ').map((word) => {
-            return {
-                name: {
-                    [Op.like]: `%${word.toLowerCase().replace(/[^\w\s]/gi, '')}%`,
-                },
-            };
-        });
-
-        const weapon = await Weapon.findOne({
+        let weapon = await Weapon.findOne({
             where: {
-                [Op.or]: query
+                name: name.toLowerCase(),
             }
         });
+
+        if (!weapon) {
+            const query = name.split(' ').map((word) => {
+                return {
+                    name: {
+                        [Op.like]: `%${word.toLowerCase().replace(/[^\w\s]/gi, '')}%`,
+                    },
+                };
+            });
+    
+            weapon = await Weapon.findOne({
+                where: {
+                    [Op.or]: query
+                }
+            });
+        }
 
         console.log(weapon);
 
