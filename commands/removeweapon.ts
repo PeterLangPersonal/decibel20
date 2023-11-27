@@ -13,7 +13,7 @@ module.exports = {
         ),
     async autocomplete(interaction: any) {
         const focusedValue = interaction.options.getFocused();
-		const weapons = await Weapon.findAll();
+		const weapons = await Weapon.findAll({limit: 25});
         const choices = weapons.map((weapon: Weapon) =>weapon.name)
 		const filtered = choices.filter((choice: string) => choice.startsWith(focusedValue));
 		await interaction.respond(
